@@ -20,48 +20,90 @@ struct StructureName
     ...
 };
 ``` 
-### Example:
-
-**JOSN Prototype:**
-
-```json
-{
-  "student": {
-    "id": 1,
-    "name": "Ram Kumar",
-    "marks": 85.5
-  }
-}
-```
-**Program:**
+**Example:**
 
 ```c
-#include <stdio.h>
-
-struct Student 
-{
+struct Student {
     int id;
     char name[50];
     float marks;
 };
 
-int main(void) 
-{
-    struct Student student = {1, "Ram", 85.5};
-    printf("Student ID: %d\n", student.id);
-    printf("Name: %s\n", student.name);
-    printf("Marks: %.2f\n", student.marks);
-    return 0;
-}
-
 ```
-
 **Explanation:**
 
 - `struct` — keyword used to define a structure
 - `Student` — name of the structure
 - `id`, `name`, `marks` — members (or fields) of the structure
 - Each member can have a different data type
+
+### Initializing Structures
+
+#### Structure Initialization:
+
+##### Syntax
+
+```c
+struct StructureName variableName = { value1, value2, value3, ... };
+```
+##### Example
+
+```c
+struct Student students = {1, "Sita", 89.5};
+```
+
+#### Array of Structures Initialization:
+
+##### Syntax
+
+```c
+struct StructureName arrayName[size] = {
+    { value1, value2, value3 },
+    { value1, value2, value3 },
+    ...
+};
+
+```
+##### Example
+
+```c
+struct Student students[3] = {
+    {1, "Sita", 89.5},
+    {2, "Ram", 92.0},
+    {3, "Hari", 76.8}
+};
+
+```
+### Accessing Structure Members
+
+#### Structure:
+
+```c
+struct Student students = {1, "Sita", 89.5};
+
+printf("ID: %d\n", student.id);
+printf("Name: %s\n", student.name);
+printf("Marks: %.2f\n", student.marks);
+```
+#### Array of Structures:
+```c
+struct Student students[3] = {
+    {1, "Sita", 89.5},
+    {2, "Ram", 92.0},
+    {3, "Hari", 76.8}
+};
+
+// Access members directly without loop
+printf("First student: %s, Marks: %.2f\n", students[0].name, students[0].marks);
+printf("Second student: %s, Marks: %.2f\n", students[1].name, students[1].marks);
+printf("Third student: %s, Marks: %.2f\n", students[2].name, students[2].marks);
+// Access members with loop
+for (int i = 0; i < 3; i++) 
+{
+    printf("Student %d: %s, Marks: %.2f\n", students[i].id, students[i].name, students[i].marks);
+}
+
+```
 
 ## Real World Example
 
