@@ -23,7 +23,8 @@ struct StructureName
 **Example:**
 
 ```c
-struct Student {
+struct Student
+{
     int id;
     char name[50];
     float marks;
@@ -237,3 +238,4 @@ struct Child
 ## Task:
 
 - [**Structure Task**](structure-task.md)
+
