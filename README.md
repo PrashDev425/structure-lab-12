@@ -50,7 +50,7 @@ struct StructureName variableName = { value1, value2, value3, ... };
 ##### Example
 
 ```c
-struct Student students = {1, "Sita", 89.5};
+struct Student student = {1, "Sita", 89.5};
 ```
 
 #### Array of Structures Initialization:
@@ -238,4 +238,5 @@ struct Child
 ## Task:
 
 - [**Structure Task**](structure-task.md)
+
 
