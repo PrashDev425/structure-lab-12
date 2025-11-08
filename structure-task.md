@@ -11,6 +11,25 @@
 
 ```
 
+### Program:
+
+```c
+#include <stdio.h>
+
+int main() 
+{
+    int marks[5] = {85, 90, 78, 88, 92};
+    int i;
+    printf("Student Marks:\n");
+    for (i = 0; i < 5; i++) 
+    {
+        printf("Student %d: %d\n", i + 1, marks[i]);
+    }
+    return 0;
+}
+```
+
+
 ## Array Within a Structure
 
 ### JSON Prototype:
@@ -26,6 +45,31 @@
 
 ```
 
+### Program:
+```c
+#include <stdio.h>
+
+struct Student 
+{
+    int id;
+    char name[50];
+    int marks[3];
+};
+
+int main(void) 
+{
+    struct Student student = {1, "Sita", {85, 90, 88}};
+    int i;
+    printf("Student ID: %d\n", student.id);
+    printf("Name: %s\n", student.name);
+    printf("Marks:\n");
+    printf("======\n");
+    for (i = 0; i < 3; i++) {
+        printf("%d ", student.marks[i]);
+    }
+    return 0;
+}
+```
 ## Array of Structures
 
 ### JSON Prototype:
@@ -51,6 +95,8 @@
   ]
 }
 ```
+### Program:
+
 
 ## Nested Structures
 
@@ -68,6 +114,8 @@
   }
 }
 ```
+### Program:
+
 ## Array of Structures Within a Structure
 
 ### JSON Prototype:
@@ -94,3 +142,5 @@
   }
 }
 ```
+
+### Program:
