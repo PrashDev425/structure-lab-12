@@ -1,5 +1,7 @@
 # Structure Task:
 
+- [View JSON Grid](https://jsongrid.com/)
+
 ## Simple Array 
 
 ### JSON Prototype:
