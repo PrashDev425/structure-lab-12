@@ -96,7 +96,35 @@ int main(void)
 }
 ```
 ### Program:
+```c
+#include <stdio.h>
 
+struct Student 
+{
+    int id;
+    char name[50];
+    float marks;
+};
+
+int main(void) 
+{
+    struct Student students[3] = 
+    {
+        {1, "Aayush", 88.5},
+        {2, "Bina", 92.0},
+        {3, "Chirag", 79.5}
+    };
+    for (int i = 0; i < 3; i++) {
+        printf("Student %d:\n", i + 1);
+        printf("=======\n");
+        printf("ID: %d\n", students[i].id);
+        printf("Name: %s\n", students[i].name);
+        printf("Marks: %.2f\n", students[i].marks);
+    }
+    return 0;
+}
+
+```
 
 ## Nested Structures
 
@@ -116,6 +144,33 @@ int main(void)
 ```
 ### Program:
 
+```c
+#include <stdio.h>
+
+struct Address 
+{
+    char city[30];
+    char country[30];
+};
+
+struct Student 
+{
+    int id;
+    char name[50];
+    struct Address address;
+};
+
+int main(void) 
+{
+    struct Student student = {1, "Krishna", {"Kathmandu", "Nepal"}};
+    printf("Student ID: %d\n", student.id);
+    printf("Name: %s\n", student.name);
+    printf("City: %s\n", student.address.city);
+    printf("Country: %s\n", student.address.country);
+    return 0;
+}
+
+```
 ## Array of Structures Within a Structure
 
 ### JSON Prototype:
@@ -144,3 +199,4 @@ int main(void)
 ```
 
 ### Program:
+
