@@ -75,6 +75,7 @@ int main(void)
         printf("5. Search Employee by Name\n");
         printf("6. Filter Employees by Salary\n");
         printf("7. Exit\n");
+        printf("=============================\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
         switch (choice) 
