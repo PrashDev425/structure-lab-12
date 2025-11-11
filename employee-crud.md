@@ -67,7 +67,7 @@ int main(void)
     int choice;
     do 
     {
-        printf("\n=== Employee System ===\n");
+        printf("\n====== Employee System ======\n");
         printf("1. Add Employee\n");
         printf("2. Display All Employees\n");
         printf("3. Update Employee\n");
