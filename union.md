@@ -56,26 +56,6 @@ int main(void)
 
 ---
 
-## Example Showing Size
-```c
-#include <stdio.h>
-
-union Test 
-{
-    int a;
-    double b;
-    char c;
-};
-
-int main(void) 
-{
-    printf("Size of union = %lu bytes\n", sizeof(union Test));
-    return 0;
-}
-```
-
----
-
 ## Use Cases
 - Saving memory when multiple data types are used but not at the same time.  
 - Useful in **embedded systems** and **interpreting raw data** (like in networking or device drivers).
