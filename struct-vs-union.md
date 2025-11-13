@@ -1,61 +1,43 @@
-# Union in C
+# Struct vs Union
 
-## What is Union in C?
-A **union** in C is a special data type that allows you to **store different data types in the same memory location**.  
-It is similar to a `struct`, but **all members share the same memory space**, meaning **only one member can hold a value at a time**.
+| **Feature** | **Structure (`struct`)** | **Union (`union`)** |
+|--------------|--------------------------|---------------------|
+| **Memory Allocation** | Each member has its **own memory**. Total size = sum of all members. | All members **share the same memory**. Total size = size of the **largest member**. |
+| **Data Storage** | Can store **different values** in all members **at the same time**. | Can store **only one value at a time** (shared memory). |
+| **Usage** | Used when you need to keep **all members active together**. | Used when you need to store **one of many possible data types**. |
+| **Initialization** | All members can be initialized separately. | Only the **first member** can be initialized during declaration. |
+| **Memory Efficiency** | Uses **more memory**. | Uses **less memory** (memory-saving). |
+| **Memory Example** | Separate memory for each member. | All members share the same memory. |
+| **Access** | All members can be accessed at the same time. | Only **one member’s value** is valid at a time. |
 
----
+## Struct and Union Storge Comparison
 
-## Syntax of a Union
-```c
-union UnionName {
-    dataType member1;
-    dataType member2;
-    dataType member3;
-};
-```
-To declare and use:
-```c
-union UnionName variableName;
-```
-
----
-
-## Example: Using a Union
 ```c
 #include <stdio.h>
-#include <string.h>
+
+struct Student 
+{
+    int id;        // 4 bytes
+    float marks;   // 4 bytes
+    char grade;    // 1 byte
+};
 
 union Data 
 {
-    int i;
-    float f;
-    char str[20];
+    int id;        // 4 bytes
+    float marks;   // 4 bytes
+    char grade;    // 1 byte
 };
 
 int main(void) 
 {
-    union Data data;
-
-    // Store an integer
-    data.i = 10;
-    printf("data.i = %d\n", data.i);
-
-    // Store a float (overwrites integer)
-    data.f = 220.5;
-    printf("data.f = %.2f\n", data.f);
-
-    // Store a string (overwrites float)
-    strcpy(data.str, "Hello");
-    printf("data.str = %s\n", data.str);
-
-    // Notice that previous values are lost because memory is shared
+    struct Student s1;
+    union Data d1;
+    printf("Size of int: %lu bytes\n", sizeof(int));
+    printf("Size of float: %lu bytes\n", sizeof(float));
+    printf("Size of char: %lu bytes\n\n", sizeof(char));
+    printf("Size of Structure: %lu bytes\n", sizeof(s1));
+    printf("Size of Union: %lu bytes\n", sizeof(d1));
     return 0;
 }
 ```
-
----
-
-## Use Cases
-- Saving memory when multiple data types are used but not at the same time.  
-- Useful in **embedded systems** and **interpreting raw data** (like in networking or device drivers).
