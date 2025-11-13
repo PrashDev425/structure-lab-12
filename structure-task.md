@@ -18,7 +18,7 @@
 ```c
 #include <stdio.h>
 
-int main() 
+int main(void) 
 {
     int marks[5] = {85, 90, 78, 88, 92};
     int i;
@@ -167,6 +167,8 @@ int main(void)
     struct Student student = {1, "Krishna", {"Kathmandu", "Nepal"}};
     printf("Student ID: %d\n", student.id);
     printf("Name: %s\n", student.name);
+    printf("Address:\n");
+    printf("========\n");
     printf("City: %s\n", student.address.city);
     printf("Country: %s\n", student.address.country);
     return 0;
@@ -202,3 +204,6 @@ int main(void)
 
 ### Program:
 
+```
+Do Yourself
+```
