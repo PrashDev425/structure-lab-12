@@ -23,7 +23,7 @@ struct StructureName
 **Example:**
 
 ```c
-struct Student
+struct Student 
 {
     int id;
     char name[50];
@@ -80,7 +80,7 @@ struct Student students[3] = {
 #### Structure:
 
 ```c
-struct Student students = {1, "Sita", 89.5};
+struct Student student = {1, "Sita", 89.5};
 
 printf("ID: %d\n", student.id);
 printf("Name: %s\n", student.name);
@@ -188,22 +188,7 @@ It is human-readable and language-independent, making it perfect for **quick pro
 ### Structure in C:
 
 ```c
-struct Person 
-{
-    int id;
-    char name[100];
-    int age;
-    char gender;
-    bool isMarried;
-    float height;
-    double weight;
-    char hobbies[3][30];
-    int luckeynumbers[10];
-    struct Date birthDate;
-    struct Address address;
-    struct Phone phones[10];
-    struct Child childrens[10];
-};
+#include <stdbool.h>
 
 struct Date 
 {
@@ -234,9 +219,26 @@ struct Child
     struct Phone phones[10];
 };
 
+struct Person 
+{
+    int id;
+    char name[100];
+    int age;
+    char gender;
+    bool isMarried;
+    float height;
+    double weight;
+
+    char hobbies[3][30];
+    int luckyNumbers[10];
+
+    struct Date birthDate;
+    struct Address address;
+    struct Phone phones[10];
+    struct Child children[10];
+};
+
 ```
 ## Task:
 
 - [**Structure Task**](structure-task.md)
-
-
