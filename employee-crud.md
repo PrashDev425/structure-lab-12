@@ -33,8 +33,9 @@ Write a C program to store and manage employee details using structure.
 }
 
 ```
+[View JSON Grid](https://jsongrid.com/)
 
-## Program Code
+## Basic Setup
 
 ```c
 #include <stdio.h>
@@ -54,120 +55,340 @@ struct Employee
 struct Employee emp[MAX];
 int count = 0;
 
-void addEmployee(); // Add employee
-void displayEmployees(); // Display employees
-void updateEmployee(); // Update employee
-void deleteEmployee(); // Delete employee
-void searchEmployee(); // Search employee by name
-void filterBySalary(); // Filter employees by salary
-int isUniqueID(int id); // Check unique ID
+const char *HEADER_FORMAT = "%-5s %-30s %-20s %-20s %-10s\n";
+const char *EMP_FORMAT    = "%-5d %-30s %-20s %-20s %-10.2f\n";
+```
 
-int main(void) 
+## Function Prototypes
+
+```c
+
+// Utility Functions
+void readString(char *str, int size);
+void printEmployee(struct Employee e);
+
+// Repository Layer
+int repo_isFull();
+int repo_isEmpty();
+int repo_isUniqueID(int id);
+int repo_findIndexByID(int id);
+void repo_add(struct Employee e);
+void repo_update(int index, struct Employee e);
+void repo_delete(int index);
+
+// Service Layer
+void addEmployee();
+void displayEmployees();
+void updateEmployee();
+void deleteEmployee();
+void searchEmployee();
+void filterBySalary();
+```
+
+## Main Function
+
+```c
+int main() 
 {
     int choice;
-    do 
-    {
-        printf("\n====== Employee System ======\n");
+
+    do {
+        printf("\n==== Employee System ====\n");
         printf("1. Add Employee\n");
-        printf("2. Display All Employees\n");
+        printf("2. Display Employees\n");
         printf("3. Update Employee\n");
         printf("4. Delete Employee\n");
         printf("5. Search Employee by Name\n");
-        printf("6. Filter Employees by Salary\n");
+        printf("6. Filter by Salary\n");
         printf("7. Exit\n");
-        printf("=============================\n");
-        printf("Enter your choice: ");
+        printf("=========================\n");
+        printf("Enter choice: ");
         scanf("%d", &choice);
         switch (choice) 
         {
-            case 1:
-                addEmployee();
-                break;
-            case 2:
-                displayEmployees();
-                break;
-            case 3:
-                break;
-            case 4:
-                break;
-            case 5:
-                break;
-            case 6:
-                break;
-            case 7:
-                printf("Exiting...\n");
-                break;
-            default:
-                printf("Invalid choice!\n");
+            case 1: addEmployee(); break;
+            case 2: displayEmployees(); break;
+            case 3: updateEmployee(); break;
+            case 4: deleteEmployee(); break;
+            case 5: searchEmployee(); break;
+            case 6: filterBySalary(); break;
+            case 7: printf("Exiting...\n"); break;
+            default: printf("Invalid choice!\n");
         }
+
+    } while (choice != 7);
+
+    return 0;
+}
+```
+
+## Program Code
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 100
+
+// ====================== Data Structure ======================
+
+struct Employee 
+{
+    int id;
+    char name[30];
+    char department[20];
+    char position[20];
+    float salary;
+};
+
+// Repository Storage
+struct Employee emp[MAX];
+int count = 0;
+
+// ====================== Global Table Formats ======================
+
+const char *HEADER_FORMAT = "%-5s %-30s %-20s %-20s %-10s\n";
+const char *EMP_FORMAT    = "%-5d %-30s %-20s %-20s %-10.2f\n";
+
+// ====================== Function Prototypes ======================
+
+// Utility Functions
+void readString(char *str, int size);
+void printEmployee(struct Employee e);
+
+// Repository Layer
+int repo_isFull();
+int repo_isEmpty();
+int repo_isUniqueID(int id);
+int repo_findIndexByID(int id);
+void repo_add(struct Employee e);
+void repo_update(int index, struct Employee e);
+void repo_delete(int index);
+
+// Service Layer
+void addEmployee();
+void displayEmployees();
+void updateEmployee();
+void deleteEmployee();
+void searchEmployee();
+void filterBySalary();
+
+// ====================== Main Menu ======================
+
+int main() 
+{
+    int choice;
+
+    do {
+        printf("\n==== Employee System ====\n");
+        printf("1. Add Employee\n");
+        printf("2. Display Employees\n");
+        printf("3. Update Employee\n");
+        printf("4. Delete Employee\n");
+        printf("5. Search Employee by Name\n");
+        printf("6. Filter by Salary\n");
+        printf("7. Exit\n");
+        printf("=========================\n");
+        printf("Enter choice: ");
+        scanf("%d", &choice);
+        switch (choice) 
+        {
+            case 1: addEmployee(); break;
+            case 2: displayEmployees(); break;
+            case 3: updateEmployee(); break;
+            case 4: deleteEmployee(); break;
+            case 5: searchEmployee(); break;
+            case 6: filterBySalary(); break;
+            case 7: printf("Exiting...\n"); break;
+            default: printf("Invalid choice!\n");
+        }
+
     } while (choice != 7);
 
     return 0;
 }
 
-int isUniqueID(int id) 
+// ====================== Implementations ======================
+
+// Utility Functions
+void readString(char *str, int size) 
+{
+    // Reads a line of input from the standard input (keyboard) into 'str'
+    // 'size' specifies the maximum number of characters to read, including the null terminator
+    fgets(str, size, stdin);
+
+    // fgets keeps the newline character '\n' if the user presses Enter,
+    // so we remove it by replacing it with the null terminator '\0'
+
+    // strcspn(str, "\n") returns the index of the first occurrence of '\n' in str
+    // If '\n' is found, replace it with '\0' to terminate the string properly
+    str[strcspn(str, "\n")] = '\0';
+}
+
+void printEmployee(struct Employee e) 
+{
+    printf(EMP_FORMAT, e.id, e.name, e.department, e.position, e.salary);
+}
+
+// Repository Layer
+
+int repo_isFull() 
+{
+    return (count >= MAX);
+}
+
+int repo_isEmpty() 
+{
+    return (count == 0);
+}
+
+int repo_isUniqueID(int id) 
 {
     for (int i = 0; i < count; i++)
         if (emp[i].id == id) return 0;
     return 1;
 }
 
+int repo_findIndexByID(int id) 
+{
+    for (int i = 0; i < count; i++)
+        if (emp[i].id == id) return i;
+    return -1;
+}
+
+void repo_add(struct Employee e) 
+{
+    emp[count++] = e;
+}
+
+void repo_update(int index, struct Employee e) 
+{
+    emp[index] = e;
+}
+
+void repo_delete(int index) 
+{
+    for (int i = index; i < count - 1; i++)
+        emp[i] = emp[i + 1];
+    count--;
+}
+
+// Service Layer
+
 void addEmployee() 
 {
-    if (count >= MAX) 
+    if (repo_isFull()) 
     {
         printf("Employee list full!\n");
         return;
     }
 
-    int id;
+    struct Employee e;
     printf("Enter ID: ");
-    scanf("%d", &id);
+    scanf("%d", &e.id);
 
-    if (!isUniqueID(id)) 
+    if (!repo_isUniqueID(e.id)) 
     {
         printf("ID already exists!\n");
         return;
     }
 
-    emp[count].id = id;
-
-    getchar(); // clear newline left by scanf
-
     printf("Enter Name: ");
-    fgets(emp[count].name, sizeof(emp[count].name), stdin);
-    emp[count].name[strcspn(emp[count].name, "\n")] = '\0'; // remove newline
+    readString(e.name, sizeof(e.name));
 
     printf("Enter Department: ");
-    fgets(emp[count].department, sizeof(emp[count].department), stdin);
-    emp[count].department[strcspn(emp[count].department, "\n")] = '\0';
+    readString(e.department, sizeof(e.department));
 
     printf("Enter Position: ");
-    fgets(emp[count].position, sizeof(emp[count].position), stdin);
-    emp[count].position[strcspn(emp[count].position, "\n")] = '\0';
+    readString(e.position, sizeof(e.position));
 
     printf("Enter Salary: ");
-    scanf("%f", &emp[count].salary);
+    scanf("%f", &e.salary);
 
-    count++;
+    repo_add(e);
     printf("Employee added successfully!\n");
 }
 
 void displayEmployees() 
 {
-    if (count == 0) 
+    if (repo_isEmpty()) 
     {
-        printf("No employees to show.\n");
+        printf("No employees.\n");
         return;
     }
-    printf("\n%-5s %-30s %-20s %-20s %-10s\n", "ID", "Name", "Department", "Position", "Salary");
-    for (int i = 0; i < count; i++) {
-        printf("%-5d %-30s %-20s %-20s %-10.2f\n",
-            emp[i].id,
-            emp[i].name,
-            emp[i].department,
-            emp[i].position,
-            emp[i].salary);
-    }
+
+    printf("\n");
+    printf(HEADER_FORMAT, "ID", "Name", "Department", "Position", "Salary");
+
+    for (int i = 0; i < count; i++)
+        printEmployee(emp[i]);
 }
+
+void updateEmployee() 
+{
+    int id;
+    printf("Enter ID to update: ");
+    scanf("%d", &id);
+    getchar();
+
+    int index = repo_findIndexByID(id);
+    if (index == -1) 
+    {
+        printf("Employee not found!\n");
+        return;
+    }
+
+    struct Employee e;
+    e.id = id;
+
+    printf("Enter new Name: ");
+    readString(e.name, sizeof(e.name));
+
+    printf("Enter new Department: ");
+    readString(e.department, sizeof(e.department));
+
+    printf("Enter new Position: ");
+    readString(e.position, sizeof(e.position));
+
+    printf("Enter new Salary: ");
+    scanf("%f", &e.salary);
+
+    repo_update(index, e);
+    printf("Employee updated successfully!\n");
+}
+
+void deleteEmployee() 
+{
+	if (repo_isEmpty()) 
+	{
+        printf("No employees.\n");
+        return;
+    }
+    
+    int id;
+    printf("Enter ID to delete: ");
+    scanf("%d", &id);
+
+    int index = repo_findIndexByID(id);
+    if (index == -1) 
+    {
+        printf("Employee not found!\n");
+        return;
+    }
+
+    repo_delete(index);
+    printf("Employee deleted successfully!\n");
+}
+
+void searchEmployee() 
+{
+
+}
+
+
+void filterBySalary() 
+{
+
+}
+
 ```
