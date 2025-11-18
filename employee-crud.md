@@ -1,6 +1,6 @@
 # Employee CRUD
 
-Write a C program to store and manage employee details using structure.
+Write a modular C program using functions and structures to store and manage employee details. The program should be menu-based.
 
 
 ## JSON Prototype
@@ -43,6 +43,8 @@ Write a C program to store and manage employee details using structure.
 
 #define MAX 100
 
+// ====================== Data Structure ======================
+
 struct Employee 
 {
     int id;
@@ -52,8 +54,11 @@ struct Employee
     float salary;
 };
 
+// Repository Storage
 struct Employee emp[MAX];
 int count = 0;
+
+// ====================== Global Table Formats ======================
 
 const char *HEADER_FORMAT = "%-5s %-30s %-20s %-20s %-10s\n";
 const char *EMP_FORMAT    = "%-5d %-30s %-20s %-20s %-10.2f\n";
@@ -62,6 +67,8 @@ const char *EMP_FORMAT    = "%-5d %-30s %-20s %-20s %-10.2f\n";
 ## Function Prototypes
 
 ```c
+
+// ====================== Function Prototypes ======================
 
 // Utility Functions
 void readString(char *str, int size);
@@ -83,12 +90,15 @@ void updateEmployee();
 void deleteEmployee();
 void searchEmployee();
 void filterBySalary();
+
 ```
 
 ## Main Function
 
 ```c
-int main() 
+// ====================== Main Menu ======================
+
+int main(void) 
 {
     int choice;
 
@@ -104,6 +114,7 @@ int main()
         printf("=========================\n");
         printf("Enter choice: ");
         scanf("%d", &choice);
+        getchar();
         switch (choice) 
         {
             case 1: addEmployee(); break;
@@ -175,7 +186,7 @@ void filterBySalary();
 
 // ====================== Main Menu ======================
 
-int main() 
+int main(void) 
 {
     int choice;
 
@@ -191,6 +202,7 @@ int main()
         printf("=========================\n");
         printf("Enter choice: ");
         scanf("%d", &choice);
+        getchar();
         switch (choice) 
         {
             case 1: addEmployee(); break;
@@ -211,17 +223,10 @@ int main()
 // ====================== Implementations ======================
 
 // Utility Functions
+
 void readString(char *str, int size) 
 {
-    // Reads a line of input from the standard input (keyboard) into 'str'
-    // 'size' specifies the maximum number of characters to read, including the null terminator
     fgets(str, size, stdin);
-
-    // fgets keeps the newline character '\n' if the user presses Enter,
-    // so we remove it by replacing it with the null terminator '\0'
-
-    // strcspn(str, "\n") returns the index of the first occurrence of '\n' in str
-    // If '\n' is found, replace it with '\0' to terminate the string properly
     str[strcspn(str, "\n")] = '\0';
 }
 
@@ -277,8 +282,7 @@ void repo_delete(int index)
 
 void addEmployee() 
 {
-    if (repo_isFull()) 
-    {
+    if (repo_isFull()) {
         printf("Employee list full!\n");
         return;
     }
@@ -286,9 +290,9 @@ void addEmployee()
     struct Employee e;
     printf("Enter ID: ");
     scanf("%d", &e.id);
+    getchar();
 
-    if (!repo_isUniqueID(e.id)) 
-    {
+    if (!repo_isUniqueID(e.id)) {
         printf("ID already exists!\n");
         return;
     }
@@ -311,8 +315,7 @@ void addEmployee()
 
 void displayEmployees() 
 {
-    if (repo_isEmpty()) 
-    {
+    if (repo_isEmpty()) {
         printf("No employees.\n");
         return;
     }
@@ -332,8 +335,7 @@ void updateEmployee()
     getchar();
 
     int index = repo_findIndexByID(id);
-    if (index == -1) 
-    {
+    if (index == -1) {
         printf("Employee not found!\n");
         return;
     }
@@ -368,6 +370,7 @@ void deleteEmployee()
     int id;
     printf("Enter ID to delete: ");
     scanf("%d", &id);
+    getchar();
 
     int index = repo_findIndexByID(id);
     if (index == -1) 
@@ -379,16 +382,4 @@ void deleteEmployee()
     repo_delete(index);
     printf("Employee deleted successfully!\n");
 }
-
-void searchEmployee() 
-{
-
-}
-
-
-void filterBySalary() 
-{
-
-}
-
 ```
